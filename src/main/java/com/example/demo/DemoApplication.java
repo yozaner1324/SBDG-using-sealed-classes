@@ -32,6 +32,19 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
+//	@Bean("Person")
+//	public ClientRegionFactoryBean<String, Person> peopleRegion(GemFireCache gemfireCache) {
+//
+//		ClientRegionFactoryBean<String, Person> exampleRegion = new ClientRegionFactoryBean<>();
+//		exampleRegion.setCache(gemfireCache);
+//		exampleRegion.setClose(false);
+//		exampleRegion.setRegionName("Person");
+//		exampleRegion.setShortcut(ClientRegionShortcut.PROXY);
+//		exampleRegion.setPersistent(false);
+//
+//		return exampleRegion;
+//	}
+
 	@Bean
 	public ApplicationRunner runner(PersonRepository personRepository) {
 

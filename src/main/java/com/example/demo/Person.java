@@ -19,7 +19,7 @@ package com.example.demo;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.gemfire.mapping.annotation.Region;
 
-@Region("People")
+@Region("Person")
 public sealed class Person permits Customer {
   @Id
   private String name;
