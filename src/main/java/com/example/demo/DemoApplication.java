@@ -19,13 +19,21 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions;
+import org.springframework.data.gemfire.mapping.annotation.Region;
+import org.springframework.data.gemfire.repository.GemfireRepository;
 import org.springframework.geode.boot.autoconfigure.SslAutoConfiguration;
 import org.springframework.geode.config.annotation.EnableClusterAware;
+import org.springframework.stereotype.Repository;
+
+import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientRegionShortcut;
 
 @SpringBootApplication(exclude = {SslAutoConfiguration.class})
 @EnableClusterAware
-@EnableEntityDefinedRegions(basePackageClasses = Person.class)
+@EnableEntityDefinedRegions
 public class DemoApplication {
 
 	public static void main(String[] args) {
@@ -62,5 +70,29 @@ public class DemoApplication {
 			System.out.println(jonDoeFoundById);
 		};
 	}
+
+
+}
+@Repository
+interface PersonRepository extends GemfireRepository<Person, String> {
+
 }
 
+@Region("Person")
+class Person{
+	@Id
+	private String name;
+	public Person(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+}
+
+class Customer extends Person {
+	public Customer(String name) {
+		super(name);
+	}
+}
